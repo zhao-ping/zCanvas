@@ -13,7 +13,7 @@ new barChart("barChart", lineChartOption);
 ## 使用方法
 ```
 npm init
-nom install
+npm install
 ```
 ## 1.柱状图
 ### A：垂直型柱状图
