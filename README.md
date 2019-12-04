@@ -1,8 +1,4 @@
-## 使用方法
-```
-npm init
-nom install
-```
+
 #### zp-chart现在有柱状图、折线图、饼图、环形图、雷达图这几种图表，下面会一一简单的说明使用方法：
 每种图表都需要传入两个参数，第一个是放置图表的标签的id，类型是str，第二个是图表所需参数：
 ```
@@ -12,9 +8,13 @@ nom install
 //柱状图
 new barChart("barChart", lineChartOption);
 ```
-
 详细使用方法请阅读下方内容：
 
+## 使用方法
+```
+npm init
+nom install
+```
 ## 1.柱状图
 ### A：垂直型柱状图
 柱状图如果不传type参数，将会默认是垂直型柱状图
