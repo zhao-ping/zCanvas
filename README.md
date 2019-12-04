@@ -15,6 +15,10 @@ new barChart("barChart", lineChartOption);
 npm init
 npm install
 ```
+### 将ES6通过babel转成浏览器可以接受的ES5
+```
+npm run babel
+```
 ## 1.柱状图
 ### A：垂直型柱状图
 柱状图如果不传type参数，将会默认是垂直型柱状图
