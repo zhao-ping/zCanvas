@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas动画</title>
+    <script src="../ES5/z-animate.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ZchartBox {
+            padding: 20px;
+            clear: both;
+        }
+
+        .ZchartBox .item {
+            width: 600px;
+            float: left;
+            margin: 5px;
+            box-shadow: 0 0 18px -5px #ddd;
+        }
+
+        .ZchartBox .item canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="ZchartBox">
+        <div class="item" id="lineAnimate">
+        </div>
+    </div>
+    <script>
+        new lineAnimate("lineAnimate",100);
+    </script>
+</body>
+</html>

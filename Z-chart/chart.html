@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zchart</title>
+    <script src="z-chart.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ZchartBox {
+            padding: 20px;
+            clear: both;
+        }
+
+        .ZchartBox .item {
+            width: 500px;
+            float: left;
+            margin: 5px;
+            box-shadow: 0 0 18px -5px #ddd;
+        }
+
+        .ZchartBox .item canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ZchartBox">
+        <div class="item" id="barChart">
+        </div>
+        <div class="item" id="barChartHorizon">
+        </div>
+        <div class="item" id="lineChartArea">
+        </div>
+        <div class="item" id="lineChart">
+        </div>
+        <div class="item" id="lineChartAndArea">
+        </div>
+        <div class="item" id="lineChartTag">
+        </div>
+        <div class="item" id="circleChart">
+        </div>
+        <div class="item" id="pieChart">
+        </div>
+        <div class="item" id="radarChart">
+        </div>
+    </div>
+    <script>
+        var lineChartOptionArea = {
+            title: "一周销售额报表",
+            xAxis: {
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '邮件营销',
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'area',//line or area
+            }, {
+                name: '联盟广告',
+                data: [920, 1032, 1001, 1034, 1390, 1430, 1420],
+                type: 'area',
+            }, {
+                name: '视频广告',
+                data: [620, 832, 800, 864, 1090, 1000, 1020],
+                type: 'area',
+            }]
+        };
+        var lineChartOption = {
+            title: "一周销售额报表",
+            xAxis: {
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '邮件营销',
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',//line or area
+            }, {
+                name: '联盟广告',
+                data: [920, 1032, 1001, 1034, 1390, 1430, 1420],
+                type: 'line',
+            }, {
+                name: '视频广告',
+                data: [620, 832, 800, 864, 1090, 1000, 1020],
+                type: 'line',
+            }]
+        };
+        //柱状图
+        new barChart("barChart", lineChartOption);
+        new barChart("barChartHorizon", {...lineChartOption,type:"horizon"});
+        // 折线图
+        new lineChart("lineChart", lineChartOption);
+        var lineChartTagOption = {
+            title: "一周销售额报表",
+            xAxis: {
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                name: '邮件营销',
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'area',
+                tag:'元'
+            }]
+        };
+        // 这线上带有标注
+        new lineChart("lineChartTag", lineChartTagOption);
+        // 折线图带有区块填充色
+        new lineChart("lineChartArea", lineChartOptionArea);
+        lineChartOption.series[2].type="area";
+        new lineChart("lineChartAndArea", lineChartOption);
+        //饼图
+        var pieDatas = { 
+            title: "一周销售额报表",
+            defalutIndex:0,
+            type:"pie",//pie、circle
+            data: [
+                { title: "周一", num:620 },
+                { title: "周二", num:832 },
+                { title: "周三", num:800 },
+                { title: "周四", num: 864}, 
+                { title: "周五", num:1090 },
+                { title: "周六", num:1000 }, 
+                { title: "周日", num:1020 },
+            ] ,
+            callback:function(i){
+                console.log(i);
+                }
+            }
+        new pieChart("circleChart", {...pieDatas,type:"circle"});
+        new pieChart("pieChart", pieDatas);
+        var radarDatas={
+            defalutIndex:0,
+            title:"英雄能力评估",
+            axis:["生命","防护","控场","机动","输出","爆发"],
+            data:[
+                {
+                    name:"嫦娥",
+                    num:[80,60,68,50,60,57]
+                },
+                {
+                    name:"后羿",
+                    num:[70,50,50,70,90,87]
+                },
+                {
+                    name:"蔡文姬",
+                    num:[100,100,70,60,30,20]
+                },
+                {
+                    name:"甄姬",
+                    num:[70,44,33,89,64,32]
+                },
+                {
+                    name:"诸葛亮",
+                    num:[19,46,45,88,90,87]
+                },
+                {
+                    name:"小乔",
+                    num:[67,69,70,80,37,45]
+                },
+            ]
+        }
+        new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
+    </script>
+</body>
+
+</html>
