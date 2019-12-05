@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Zchart</title>
-    <script src="z-chart.js"></script>
+    <script src="./ES5/z-chart.js"></script>
     <style>
         html,
         body {
@@ -35,6 +35,8 @@
 
 <body>
     <div class="ZchartBox">
+        <div class="item" id="scatterChart">
+        </div>
         <div class="item" id="barChart">
         </div>
         <div class="item" id="barChartHorizon">
@@ -169,6 +171,37 @@
             ]
         }
         new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
+        var scatterChartoption = {
+            type: 'scatter',
+            title:"IT行业经验岗位收入散点图",
+            xTag: "年",
+            xTagNum:5,
+            yTag:"K",
+            yTagNum:5,
+            symbolSize:null,
+            series:  [
+                {
+                    name:"JAVA",
+                    data:[]
+                },
+                {
+                    name:"Python",
+                    data:[]
+                },
+                {
+                    name:"Golang",
+                    data:[]
+                }
+            ],
+        };
+        scatterChartoption.series.map((item,i)=>{
+            for(let i=0;i<30;i++){
+                var x=Math.random()*50;
+                var y=x*(Math.random()*1.5+i*0.5);
+                item.data.push({x,y})
+            }
+        })
+        new scatterChart("scatterChart",scatterChartoption)
     </script>
 </body>
 
