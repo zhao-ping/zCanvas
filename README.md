@@ -263,7 +263,7 @@ var radarDatas={
 new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
 ```
 
-## 散点图
+## 5.散点图
 
 ```
 var scatterChartoption = {
@@ -277,15 +277,15 @@ var scatterChartoption = {
     series:  [
         {
             name:"JAVA",
-            data:[{x:5,y:13},***]
+            data:[{x:5,y:13},{x:1,y:3},]
         },
         {
             name:"Python",
-            data:[{x:5,y:13},***]
+            data:[{x:2,y:13},{x:3,y:10},]
         },
         {
             name:"Golang",
-            data:[{x:5,y:13},***]
+            data:[{x:10,y:18},{x:2.5,y:8},]
         }
     ],
 };
