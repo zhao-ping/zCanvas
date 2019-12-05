@@ -263,3 +263,40 @@ var radarDatas={
 new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
 ```
 
+### B：散点图
+
+```
+var scatterChartoption = {
+    type: 'scatter',
+    title:"IT行业经验岗位收入散点图",
+    xTag: "年",
+    xTagNum:5,
+    yTag:"K",
+    yTagNum:5,
+    symbolSize:null,
+    series:  [
+        {
+            name:"JAVA",
+            data:[{x:5,y:13},***]
+        },
+        {
+            name:"Python",
+            data:[{x:5,y:13},***]
+        },
+        {
+            name:"Golang",
+            data:[{x:5,y:13},***]
+        }
+    ],
+};
+//因为数据太多，写起来麻烦，所以我就写了个循环计算series的data值;
+scatterChartoption.series.map((item,i)=>{
+    item.data=[];
+    for(let i=0;i<30;i++){
+        var x=Math.random()*50;
+        var y=x*(Math.random()*1.5+i*0.5);
+        item.data.push({x,y})
+    }
+})
+new scatterChart("scatterChart",scatterChartoption)
+```
