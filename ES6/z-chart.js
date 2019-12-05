@@ -658,3 +658,137 @@ class radarChart {
         }
     }
 }
+
+class scatterChart {
+    constructor(id, {title,xTag="",xTagNum=5,yTag="",yTagNum=5,symbolSize,series}) {
+        this.colors=["#FD7A4F","#FDD764","#7359C3","#42C288","#92E98E","#2E8AE6","#44C0EA","#3C52C9","#4Dd62196"];
+        const box= document.getElementById(id);
+        box.innerHTML="";
+        this.c=document.createElement("canvas");
+        this.width=box.clientWidth*4;
+        this.height=box.clientHeight?box.clientHeight*4:this.width*0.6;
+        this.c.width=this.width;
+        this.c.height=this.height;
+        this.c.style.width=this.width/4+'px';
+        this.c.style.height=this.height/4+'px';
+        this.context=this.c.getContext("2d");
+        this.context.width=this.size;
+        this.title=title;
+        this.series=series;
+        this.xTag=xTag;
+        this.yTag=yTag;
+        this.xTagNum=xTagNum;
+        this.yTagNum=yTagNum;
+        this.left=this.width*0.12;
+        this.lineLeft=this.width*0.22;
+        this.right=this.width*0.95;
+        this.lineRight=this.width*0.85;
+        this.top=this.height*0.1;
+        this.lineTop=this.height*0.2;
+        this.bottom=this.height*0.8;
+        this.lineBottom=this.height*0.7;
+        this.symbolSize=symbolSize||0.1;
+        this.setTitle();
+        this.draw();
+        box.appendChild(this.c);
+    }
+    setTitle(){
+        this.context.font=(this.width*0.04>80?80:this.width*0.04)+"px Helvetica";
+        this.context.textAlign="center";
+        this.context.fillText(this.title,this.width/2,this.height*0.08,this.width);
+    }
+    draw(){
+        // 坐标轴
+        this.context.fillStyle='#333';
+        this.context.strokeStyle='#666';
+        this.context.lineWidth=1;
+        this.context.beginPath();
+        this.context.moveTo(this.left,this.top);
+        this.context.lineTo(this.left,this.bottom);
+        this.context.lineTo(this.right,this.bottom);
+        this.context.stroke();
+        // 计算恒旭欧标和纵坐标轴标注
+        let xDatas=[];
+        let yDatas=[];
+        this.series.map(item=>{
+            xDatas=[...xDatas,...item.data.map(tem=>tem.x)];
+            yDatas=[...yDatas,...item.data.map(tem=>tem.y)];
+        })
+        if(xDatas.length==0) return
+        const xMin=Math.min(...xDatas);
+        const xMax=Math.max(...xDatas);
+        const yMin=Math.min(...yDatas);
+        const yMax=Math.max(...yDatas);
+        const everyX=(this.lineRight-this.lineLeft)/(xMax-xMin);
+        const everyXWidth=(this.lineRight-this.lineLeft)/(this.xTagNum-1);
+        const everyY=(this.lineBottom-this.lineTop)/(yMax-yMin);
+        const everyYHeight=(this.lineBottom-this.lineTop)/(this.yTagNum-1);
+        console.log(this.lineRight-this.lineLeft);
+        this.context.fillStyle="#999"
+        this.context.textAlign='center';
+        this.context.textBaseline='top';
+        // 横坐标标记
+        this.context.font=(this.width*0.02>60?60:this.width*0.02)+"px Helvetica";
+        this.context.textAlign="center";
+        this.context.textBaseline="middle";
+        for(let i=0;i<5;i++){
+            const xTagStr=(xMin+(xMax-xMin)/(this.xTagNum-1)*i).toFixed(0)+this.xTag;
+            const position=[this.lineLeft+everyXWidth*i,this.bottom+this.height*0.05];
+            this.context.fillText(xTagStr,...position,everyXWidth);
+        }
+        //纵坐标
+        this.context.textAlign="right";
+        this.context.textBaseline="middle";
+        for(let i=0;i<5;i++){
+            const yTagStr=(yMin+(yMax-yMin)/(this.yTagNum-1)*i).toFixed(0)+this.yTag;
+            let positon=[this.left-this.width*0.02,this.lineBottom-everyYHeight*i];
+            this.context.fillText(yTagStr,...positon,this.left);
+        }
+        //标注
+        //画出标注
+        //计算标注起始位置
+        this.context.font=(this.width*0.02>60?60:this.width*0.02)+"px Helvetica";
+        let textWidth=0;
+        let textStartXaxis=this.width*0.05;
+        this.series.map((item,i)=>{
+            let text=item.name;
+            textWidth+=this.context.measureText(text).width+this.width*0.08;
+        })
+        if(textWidth<this.width*0.9){
+            textStartXaxis=(this.width-textWidth)/2
+        }else{
+            textStartXaxis=this.width*0.05;
+        }
+        this.series.map((item,i)=>{
+            let text=item.name;
+            this.context.fillStyle=this.colors[i];
+            this.context.beginPath();
+            //圆形
+            this.context.globalAlpha=0.5;
+            this.context.arc(textStartXaxis,this.height*0.95,this.width*this.symbolSize*0.1,0,Math.PI*2);
+            this.context.fill();
+            //name
+            this.context.globalAlpha=1;
+            this.context.beginPath();
+            this.context.fillStyle="#999";
+            this.context.textAlign="left";
+            this.context.textBaseline='middle';
+            this.context.fillText(text,textStartXaxis+this.width*0.02,this.height*0.95,this.width*0.6);
+            this.context.fill();
+            textStartXaxis+=this.context.measureText(text).width+this.width*0.08;
+        })
+        // 散点
+        this.context.globalAlpha=0.5;
+        this.series.map((item,i)=>{
+            this.context.fillStyle=this.colors[i];
+            var datas=item.data;
+            datas.map(data=>{
+                this.context.beginPath();
+                let position=[this.lineLeft+(data.x-xMin)*everyX,this.lineBottom-(data.y-yMin)*everyY]
+                this.context.arc(...position,this.width*this.symbolSize*0.1,0,Math.PI*2);
+                this.context.fill();
+            })
+        })
+        this.context.globalAlpha=1;
+    }
+}
