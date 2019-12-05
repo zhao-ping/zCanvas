@@ -263,7 +263,7 @@ var radarDatas={
 new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
 ```
 
-### B：散点图
+## 散点图
 
 ```
 var scatterChartoption = {
