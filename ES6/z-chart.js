@@ -660,7 +660,7 @@ class radarChart {
 }
 
 class scatterChart {
-    constructor(id, {title,xTag="",xTagNum=5,yTag="",yTagNum=5,symbolSize,series}) {
+    constructor(id, {title,xTag="",xTagNum=5,yTag="",yTagNum=5,symbolSize,series,type="scatter"}) {
         this.colors=["#FD7A4F","#FDD764","#7359C3","#42C288","#92E98E","#2E8AE6","#44C0EA","#3C52C9","#4Dd62196"];
         const box= document.getElementById(id);
         box.innerHTML="";
@@ -674,6 +674,7 @@ class scatterChart {
         this.context=this.c.getContext("2d");
         this.context.width=this.size;
         this.title=title;
+        this.type=type;
         this.series=series;
         this.xTag=xTag;
         this.yTag=yTag;
@@ -710,10 +711,12 @@ class scatterChart {
         // 计算恒旭欧标和纵坐标轴标注
         let xDatas=[];
         let yDatas=[];
+        
         this.series.map(item=>{
             xDatas=[...xDatas,...item.data.map(tem=>tem.x)];
             yDatas=[...yDatas,...item.data.map(tem=>tem.y)];
         })
+        
         if(xDatas.length==0) return
         const xMin=Math.min(...xDatas);
         const xMax=Math.max(...xDatas);
@@ -723,7 +726,6 @@ class scatterChart {
         const everyXWidth=(this.lineRight-this.lineLeft)/(this.xTagNum-1);
         const everyY=(this.lineBottom-this.lineTop)/(yMax-yMin);
         const everyYHeight=(this.lineBottom-this.lineTop)/(this.yTagNum-1);
-        console.log(this.lineRight-this.lineLeft);
         this.context.fillStyle="#999"
         this.context.textAlign='center';
         this.context.textBaseline='top';
@@ -777,15 +779,31 @@ class scatterChart {
             this.context.fill();
             textStartXaxis+=this.context.measureText(text).width+this.width*0.08;
         })
+        //计算散点大小
+        let zDatas=[];
+        if(this.type=="bubble"){
+            this.series.map(item=>{
+                zDatas=[...zDatas,...item.data.map(tem=>tem.z)];
+            })
+        }
+        const minZ=Math.min(...zDatas);
+        const maxZ=Math.max(...zDatas);
+        const minSymbolSize=this.symbolSize*0.4;
+        const maxSymbolSize=minSymbolSize+this.symbolSize*3;
+        const everySymbolSize=(maxSymbolSize-minSymbolSize)/(maxZ-minZ);
         // 散点
         this.context.globalAlpha=0.5;
         this.series.map((item,i)=>{
             this.context.fillStyle=this.colors[i];
             var datas=item.data;
             datas.map(data=>{
+                let symbolSize=this.symbolSize*0.1;
+                if(this.type=="bubble"){
+                    symbolSize=(minSymbolSize+(data.z-minZ)*everySymbolSize)*0.1;
+                }
                 this.context.beginPath();
                 let position=[this.lineLeft+(data.x-xMin)*everyX,this.lineBottom-(data.y-yMin)*everyY]
-                this.context.arc(...position,this.width*this.symbolSize*0.1,0,Math.PI*2);
+                this.context.arc(...position,this.width*symbolSize,0,Math.PI*2);
                 this.context.fill();
             })
         })

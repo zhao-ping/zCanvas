@@ -988,7 +988,9 @@ function () {
         _ref11$yTagNum = _ref11.yTagNum,
         yTagNum = _ref11$yTagNum === void 0 ? 5 : _ref11$yTagNum,
         symbolSize = _ref11.symbolSize,
-        series = _ref11.series;
+        series = _ref11.series,
+        _ref11$type = _ref11.type,
+        type = _ref11$type === void 0 ? "scatter" : _ref11$type;
 
     _classCallCheck(this, scatterChart);
 
@@ -1005,6 +1007,7 @@ function () {
     this.context = this.c.getContext("2d");
     this.context.width = this.size;
     this.title = title;
+    this.type = type;
     this.series = series;
     this.xTag = xTag;
     this.yTag = yTag;
@@ -1065,7 +1068,6 @@ function () {
       var everyXWidth = (this.lineRight - this.lineLeft) / (this.xTagNum - 1);
       var everyY = (this.lineBottom - this.lineTop) / (yMax - yMin);
       var everyYHeight = (this.lineBottom - this.lineTop) / (this.yTagNum - 1);
-      console.log(this.lineRight - this.lineLeft);
       this.context.fillStyle = "#999";
       this.context.textAlign = 'center';
       this.context.textBaseline = 'top'; // 横坐标标记
@@ -1140,7 +1142,23 @@ function () {
         _this11.context.fill();
 
         textStartXaxis += _this11.context.measureText(text).width + _this11.width * 0.08;
-      }); // 散点
+      }); //计算散点大小
+
+      var zDatas = [];
+
+      if (this.type == "bubble") {
+        this.series.map(function (item) {
+          zDatas = [].concat(_toConsumableArray(zDatas), _toConsumableArray(item.data.map(function (tem) {
+            return tem.z;
+          })));
+        });
+      }
+
+      var minZ = Math.min.apply(Math, _toConsumableArray(zDatas));
+      var maxZ = Math.max.apply(Math, _toConsumableArray(zDatas));
+      var minSymbolSize = this.symbolSize * 0.4;
+      var maxSymbolSize = minSymbolSize + this.symbolSize * 3;
+      var everySymbolSize = (maxSymbolSize - minSymbolSize) / (maxZ - minZ); // 散点
 
       this.context.globalAlpha = 0.5;
       this.series.map(function (item, i) {
@@ -1149,11 +1167,17 @@ function () {
         datas.map(function (data) {
           var _this11$context;
 
+          var symbolSize = _this11.symbolSize * 0.1;
+
+          if (_this11.type == "bubble") {
+            symbolSize = (minSymbolSize + (data.z - minZ) * everySymbolSize) * 0.1;
+          }
+
           _this11.context.beginPath();
 
           var position = [_this11.lineLeft + (data.x - xMin) * everyX, _this11.lineBottom - (data.y - yMin) * everyY];
 
-          (_this11$context = _this11.context).arc.apply(_this11$context, position.concat([_this11.width * _this11.symbolSize * 0.1, 0, Math.PI * 2]));
+          (_this11$context = _this11.context).arc.apply(_this11$context, position.concat([_this11.width * symbolSize, 0, Math.PI * 2]));
 
           _this11.context.fill();
         });

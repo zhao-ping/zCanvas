@@ -265,6 +265,7 @@ new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}
 
 ## 5.散点图
 
+### A：散点图
 ```
 var scatterChartoption = {
     type: 'scatter',
@@ -299,4 +300,52 @@ scatterChartoption.series.map((item,i)=>{
     }
 })
 new scatterChart("scatterChart",scatterChartoption)
+```
+
+### B：气泡图
+气泡图与散点图的参数是一致的,只不过在data数据中增加了z字段用于表示气泡的大小，另外，参数type改为了"bubble"
+```
+var bubbleChartoption = {
+    type: 'bubble',
+    title:"北上广过去一百年城市人均收入与幸福感关系气泡图(虚构数据)",
+    xTag: "年",
+    xTagNum:5,
+    yTag:"万人",
+    yTagNum:5,
+    symbolSize:null,
+    series:  [
+        {
+            name:"北京",
+            data:[
+                {x:100,y:20,z:30},
+                //***
+                ]
+        },
+        {
+            name:"上海",
+            data:[
+                {x:100,y:20,z:30},
+                //***
+                ]
+        },
+        {
+            name:"广州",
+            data:[
+                {x:100,y:20,z:30},
+                //***
+                ]
+        }
+    ],
+};
+//模拟数据
+bubbleChartoption.series.map((item,i)=>{
+    item.data=[];
+    for(let i=0;i<10;i++){
+        var x=Math.random()*100+1920;
+        var y=Math.random()*(i+2)*(x-1920)*(x-1920)+2000;
+        var z=Math.random()*90+10;
+        item.data.push({x,y,z})
+    }
+})
+new scatterChart("bubbleChart",bubbleChartoption);
 ```

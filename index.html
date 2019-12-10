@@ -20,7 +20,7 @@
         }
 
         .ZchartBox .item {
-            width: 500px;
+            width: 800px;
             float: left;
             margin: 5px;
             box-shadow: 0 0 18px -5px #ddd;
@@ -35,6 +35,8 @@
 
 <body>
     <div class="ZchartBox">
+        <div class="item" id="bubbleChart">
+        </div>
         <div class="item" id="scatterChart">
         </div>
         <div class="item" id="barChart">
@@ -173,7 +175,7 @@
         new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
         var scatterChartoption = {
             type: 'scatter',
-            title:"IT行业经验岗位收入散点图",
+            title:"IT行业经验岗位收入散点图(虚构数据)",
             xTag: "年",
             xTagNum:5,
             yTag:"K",
@@ -198,10 +200,43 @@
             for(let i=0;i<30;i++){
                 var x=Math.random()*50;
                 var y=x*(Math.random()*1.5+i*0.5);
-                item.data.push({x,y})
+                var z=Math.random()*15;
+                item.data.push({x,y,z})
             }
         })
-        new scatterChart("scatterChart",scatterChartoption)
+        new scatterChart("scatterChart",scatterChartoption);
+        var bubbleChartoption = {
+            type: 'bubble',
+            title:"北上广过去一百年城市人均收入与幸福感关系气泡图(虚构数据)",
+            xTag: "年",
+            xTagNum:5,
+            yTag:"万人",
+            yTagNum:5,
+            symbolSize:null,
+            series:  [
+                {
+                    name:"北京",
+                    data:[]
+                },
+                {
+                    name:"上海",
+                    data:[]
+                },
+                {
+                    name:"广州",
+                    data:[]
+                }
+            ],
+        };
+        bubbleChartoption.series.map((item,i)=>{
+            for(let i=0;i<10;i++){
+                var x=Math.random()*100+1920;
+                var y=Math.random()*(i+2)*(x-1920)*(x-1920)+2000;
+                var z=Math.random()*90+10;
+                item.data.push({x,y,z})
+            }
+        })
+        new scatterChart("bubbleChart",bubbleChartoption);
     </script>
 </body>
 
