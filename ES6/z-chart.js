@@ -786,7 +786,7 @@ class scatterChart {
                 zDatas=[...zDatas,...item.data.map(tem=>tem.z)];
             })
         }
-        // 为计算散点大小做准备
+        // 为计算气泡大小做准备
         const minZ=Math.min(...zDatas);
         const maxZ=Math.max(...zDatas);
         const minSymbolSize=this.symbolSize*0.4;
