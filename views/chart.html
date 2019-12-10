@@ -15,14 +15,13 @@
         }
 
         .ZchartBox {
-            padding: 20px;
+            margin: 20px;
             clear: both;
         }
 
         .ZchartBox .item {
-            width: 800px;
             float: left;
-            margin: 5px;
+            margin: 0.5%;
             box-shadow: 0 0 18px -5px #ddd;
         }
 
@@ -30,6 +29,15 @@
             width: 100%;
             height: 100%;
         }
+        @media only screen and (max-width: 419px) {
+            .ZchartBox .item{width: 98%;height: 98%;}
+        }
+        @media only screen and (min-width: 420px) and (max-width: 1600px) {
+            .ZchartBox .item{width: 44%;height: 44%;}
+        }
+        @media only screen and (min-width: 1601px) {
+            .ZchartBox .item{width: 32.3%;height: 32.3%;}
+        } 
     </style>
 </head>
 
@@ -207,7 +215,7 @@
         new scatterChart("scatterChart",scatterChartoption);
         var bubbleChartoption = {
             type: 'bubble',
-            title:"北上广过去一百年城市人均收入与幸福感关系气泡图(虚构数据)",
+            title:"北上广一百年城市人均收入与幸福感气泡图(虚构数据)",
             xTag: "年",
             xTagNum:5,
             yTag:"元",
