@@ -1152,7 +1152,8 @@ function () {
             return tem.z;
           })));
         });
-      }
+      } // 为计算散点大小做准备
+
 
       var minZ = Math.min.apply(Math, _toConsumableArray(zDatas));
       var maxZ = Math.max.apply(Math, _toConsumableArray(zDatas));

@@ -786,11 +786,13 @@ class scatterChart {
                 zDatas=[...zDatas,...item.data.map(tem=>tem.z)];
             })
         }
+        // 为计算散点大小做准备
         const minZ=Math.min(...zDatas);
         const maxZ=Math.max(...zDatas);
         const minSymbolSize=this.symbolSize*0.4;
         const maxSymbolSize=minSymbolSize+this.symbolSize*3;
         const everySymbolSize=(maxSymbolSize-minSymbolSize)/(maxZ-minZ);
+
         // 散点
         this.context.globalAlpha=0.5;
         this.series.map((item,i)=>{
