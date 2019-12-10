@@ -1,5 +1,5 @@
 
-![image](https://github.com/zhao-ping/zCanvas/blob/master/images/z-cahrt.png)
+![image](https://github.com/zhao-ping/zCanvas/blob/master/images/z-chart.png)
 
 #### zp-chart现现有的图表包括```柱状图```、```折线图```、```饼图```、```环形图```、```雷达图```、```散点图```、```气泡图```这几种图表，下面会一一简单的说明使用方法：
 每种图表都需要传入两个参数，第一个是放置图表的标签的id，类型是str，第二个是图表所需参数：
