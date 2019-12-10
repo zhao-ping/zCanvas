@@ -20,7 +20,7 @@
         }
 
         .ZchartBox .item {
-            width: 400px;
+            width: 800px;
             float: left;
             margin: 5px;
             box-shadow: 0 0 18px -5px #ddd;
@@ -210,7 +210,7 @@
             title:"北上广过去一百年城市人均收入与幸福感关系气泡图(虚构数据)",
             xTag: "年",
             xTagNum:5,
-            yTag:"万人",
+            yTag:"元",
             yTagNum:5,
             symbolSize:null,
             series:  [
@@ -231,7 +231,7 @@
         bubbleChartoption.series.map((item,i)=>{
             for(let i=0;i<10;i++){
                 var x=Math.random()*100+1920;
-                var y=Math.random()*(i+2)*(x-1920)*(x-1920)+2000;
+                var y=Math.random()*(i+2)*(x-1920)*(x-1920)/2+2000;
                 var z=Math.random()*90+10;
                 item.data.push({x,y,z})
             }
