@@ -55,7 +55,7 @@ function () {
     var box = document.getElementById(id);
 
     if (!box) {
-      alert("您传入的ID不正确");
+      console.log("您传入的ID不正确");
       return false;
     }
 
@@ -141,16 +141,17 @@ function () {
   }, {
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
     }
   }, {
-    key: "drwaTitle",
-    value: function drwaTitle() {
+    key: "drawTitle",
+    value: function drawTitle() {
       this.context.font = "".concat(18 * this.fontSizeScale, "px Helvetica");
       this.context.fillStyle = "#000";
       this.context.textAlign = "center";
       this.context.textBaseline = "top";
       this.context.fillText(this.title, this.width / 2, this.fontSizeScale * 5, this.width);
+      this.top = 40 * this.fontSizeScale;
     }
   }, {
     key: "drawLegend",
@@ -392,7 +393,8 @@ function (_chart) {
   }]);
 
   return axisChart;
-}(chart);
+}(chart); // 折线图
+
 
 var lineChart =
 /*#__PURE__*/
@@ -428,7 +430,7 @@ function (_axisChart) {
   _createClass(lineChart, [{
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
       this.drwaAxis();
       this.drawLine();
     }
@@ -611,7 +613,8 @@ function (_axisChart) {
   }]);
 
   return lineChart;
-}(axisChart);
+}(axisChart); // 柱状图
+
 
 var barChart =
 /*#__PURE__*/
@@ -649,7 +652,7 @@ function (_axisChart2) {
   _createClass(barChart, [{
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
       this.drwaAxis();
       this.drawBar();
     }
@@ -755,7 +758,8 @@ function (_axisChart2) {
   }]);
 
   return barChart;
-}(axisChart);
+}(axisChart); // 气泡图
+
 
 var scatterChart =
 /*#__PURE__*/
@@ -814,7 +818,7 @@ function (_chart2) {
   _createClass(scatterChart, [{
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
       this.drwaAxis();
     }
   }, {
@@ -1072,7 +1076,8 @@ function (_chart2) {
   }]);
 
   return scatterChart;
-}(chart);
+}(chart); // 雷达图
+
 
 var radarChart =
 /*#__PURE__*/
@@ -1134,7 +1139,7 @@ function (_chart3) {
   _createClass(radarChart, [{
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
       this.initLegendData();
       this.drawBg();
       this.drawHeros();
@@ -1403,7 +1408,8 @@ function (_chart3) {
   }]);
 
   return radarChart;
-}(chart);
+}(chart); // 饼图
+
 
 var pieChart =
 /*#__PURE__*/
@@ -1464,7 +1470,7 @@ function (_chart4) {
   _createClass(pieChart, [{
     key: "draw",
     value: function draw() {
-      this.drwaTitle();
+      this.drawTitle();
       this.initLegendData();
       this.drawPie();
     }
@@ -1695,4 +1701,142 @@ function (_chart4) {
   }]);
 
   return pieChart;
+}(chart); // 3/4环形图
+
+
+var doughnutChart =
+/*#__PURE__*/
+function (_chart5) {
+  _inherits(doughnutChart, _chart5);
+
+  function doughnutChart(id, _ref7) {
+    var _this24;
+
+    var _ref7$title = _ref7.title,
+        title = _ref7$title === void 0 ? "3/4环形图" : _ref7$title,
+        maxData = _ref7.maxData,
+        data = _ref7.data,
+        _ref7$tag = _ref7.tag,
+        tag = _ref7$tag === void 0 ? "" : _ref7$tag,
+        _ref7$callback = _ref7.callback,
+        callback = _ref7$callback === void 0 ? function () {} : _ref7$callback;
+
+    _classCallCheck(this, doughnutChart);
+
+    _this24 = _possibleConstructorReturn(this, _getPrototypeOf(doughnutChart).call(this, id, title));
+    _this24.colors = [].concat(colors).splice(1, colors.length - 1);
+    _this24.maxData = maxData;
+    _this24.data = data;
+    _this24.tag = tag;
+    _this24.callback = callback;
+
+    _this24.initData();
+
+    _this24.draw();
+
+    return _this24;
+  }
+
+  _createClass(doughnutChart, [{
+    key: "draw",
+    value: function draw() {
+      this.drawTitle();
+      this.drawDoughnut();
+    }
+  }, {
+    key: "reDraw",
+    value: function reDraw() {
+      this.context.clearRect(0, 0, this.width, this.height);
+      this.draw();
+    }
+  }, {
+    key: "initData",
+    value: function initData() {
+      this.box.innerHTML = "";
+      var width = this.box.clientWidth;
+      var height = this.box.clientHeight || width;
+      this.box.appendChild(this.canvas);
+      this.width = width * this.scale;
+      this.height = height * this.scale;
+      this.canvas.style.width = width + "px";
+      this.canvas.style.height = height + "px";
+      this.context = this.canvas.getContext("2d");
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
+      var size = width > height ? width : this.height;
+
+      if (size <= 289) {
+        this.fontSizeScale = 0.7;
+      } else if (size >= 580) {
+        this.fontSizeScale = 1.4;
+      } else {
+        this.fontSizeScale = size / 414;
+      }
+
+      this.fontSizeScale = this.fontSizeScale * this.scale;
+      this.initSelfData();
+    }
+  }, {
+    key: "initSelfData",
+    value: function initSelfData() {}
+  }, {
+    key: "drawDoughnut",
+    value: function drawDoughnut() {
+      var _this25 = this;
+
+      this.bottom = this.height - 20 * this.fontSizeScale;
+      this.pointCenter = [this.width / 2, (this.bottom - this.top) / 2 + this.top];
+      var startRadiusPercent = 0.2;
+      var maxRadius = this.bottom - this.pointCenter[1];
+      var stepRadius = maxRadius * (1 - startRadiusPercent) / this.data.length;
+      this.context.lineWidth = stepRadius / 2;
+      this.context.lineCap = "round";
+      this.context.font = "".concat(9 * this.fontSizeScale, "px Helvetica");
+      this.context.textAlign = "left";
+      this.context.textBaseline = "middle";
+      var radius = maxRadius * startRadiusPercent + stepRadius / 2; // 计算最大值
+
+      if (!this.maxData) {
+        var datas = this.data.map(function (item) {
+          return item.num;
+        });
+        this.maxData = Math.max.apply(Math, _toConsumableArray(datas));
+      }
+
+      this.data.map(function (item, itemIndex) {
+        var _this25$context, _this25$context2;
+
+        //背景环
+        _this25.context.strokeStyle = _this25.colors[itemIndex];
+        _this25.context.globalAlpha = 0.1;
+
+        _this25.context.beginPath();
+
+        (_this25$context = _this25.context).arc.apply(_this25$context, _toConsumableArray(_this25.pointCenter).concat([radius, 0, Math.PI * 1.5, false]));
+
+        _this25.context.stroke(); // 数据环
+        // 计算结束角度
+
+
+        var endAngle = -0.5 * Math.PI - item.num / _this25.maxData * Math.PI * 1.5;
+        console.log(endAngle);
+        _this25.context.globalAlpha = 1;
+
+        _this25.context.beginPath();
+
+        (_this25$context2 = _this25.context).arc.apply(_this25$context2, _toConsumableArray(_this25.pointCenter).concat([radius, -0.5 * Math.PI, endAngle, true]));
+
+        _this25.context.stroke(); // name
+
+
+        _this25.context.fillStyle = "#333";
+
+        _this25.context.fillText("".concat(item.name, " / ").concat(item.num).concat(_this25.tag), _this25.pointCenter[0] + stepRadius * 0.5, _this25.pointCenter[1] - stepRadius * (itemIndex + 0.5) - startRadiusPercent * maxRadius);
+
+        radius += stepRadius;
+      });
+    }
+  }]);
+
+  return doughnutChart;
 }(chart);

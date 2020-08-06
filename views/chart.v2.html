@@ -3,62 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="../ES6/z-chart.v2.js"></script>
+    <script type="text/javascript" src="../ES5/z-chart.v2.js"></script>
     <title>图表2.0</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ZchartBox {
+            margin: 20px;
+            clear: both;
+        }
+
+        .ZchartBox .item {
+            float: left;
+            margin: 0.5%;
+            box-shadow: 0 0 18px -5px #ddd;
+        }
+
+        .ZchartBox .item canvas {
+            width: 100%;
+            height: 100%;
+        }
+        .ZchartBox .item{width: 32.3%;height: 32.3%;}
+        /* @media only screen and (max-width: 419px) {
+            .ZchartBox .item{width: 98%;height: 98%;}
+        }
+        @media only screen and (min-width: 420px) and (max-width: 1600px) {
+            .ZchartBox .item{width: 44%;height: 44%;}
+        }
+        @media only screen and (min-width: 1601px) {
+            .ZchartBox .item{width: 32.3%;height: 32.3%;}
+        }  */
+    </style>
 </head>
 <body>
-    <div id="doughnutChart"></div>
-    <div id="circleChart"></div>
-    <div id="radarChart"></div>
-    <div id="barChart"></div>
-    <div id="barChartHorizon"></div>
-    <div id="bubbleChart"></div>
-    <div id="scatterChart"></div>
-    <div id="lineChart"></div>
+    <div class="ZchartBox">
+        <div class="item" id="doughnutChart"></div>
+        <div class="item" id="circleChart"></div>
+        <div class="item" id="radarChart"></div>
+        <div class="item" id="barChart"></div>
+        <div class="item" id="barChartHorizon"></div>
+        <div class="item" id="bubbleChart"></div>
+        <div class="item" id="scatterChart"></div>
+        <div class="item" id="lineChart"></div>
+    </div>
+    
     <script>
         // 折线图与柱状图
-        var lineChartOption = {
-            title: "一周销售额报表", 
-            type:"verticle",
+        var chartOption = {
+            title: "一周销售额报表", //图表标题
+            type:"verticle",//柱状图方向，有垂直型柱状图(verticle)和水平型柱状图
             xAxis: {
-                tag:"周",
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],//X轴数据
             },
             yAxis: {
-                tofixed:0,
+                tofixed:0,//Y轴数据小数点位数，默认是0
                 type: 'value',
-                tag:"元",
+                tag:"元",//y轴数值单位
             },
             series: [{
-                name: '邮件营销',
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'area',//line or area
-                tag:''
+                name: '邮件营销',//数据分类标题
+                data: [820, 932, 901, 934, 1290, 1330, 1320],//数据具体数值
+                type: 'area',//line or area 用于折线图，line只画折线，area折线区域有颜色块
+                tag:"",//有tag参数时,数据点的标注为data值+tag，没有tag参数时，数据点将不会标注
             }, {
                 name: '联盟广告',
                 data: [920, 1032, 1001, 1034, 1390, 1430, 1420],
-                type: 'area',
-                tag:''
+                type: 'line',
+                tag:""
             }, {
                 name: '视频广告',
                 data: [620, 832, 800, 864, 1090, 1000, 1020],
                 type: 'area',
-                tag:''
             }],
-            callback(i){console.log(i)}
+            callback(i){console.log(i)}//点击切换展示的具体数据条时的回调函数
         };
-        var barChartHorizon=new barChart("barChartHorizon", {...lineChartOption,type:"horizon"});
-        var barchart=new barChart("barChart", lineChartOption);
-        var linechart=new lineChart("lineChart", lineChartOption);
+        var barChartHorizon=new barChart("barChartHorizon", {...chartOption,type:"horizon"});
+        var barchart=new barChart("barChart", chartOption);
+        var linechart=new lineChart("lineChart", chartOption);
         // 散点图与气泡图
         var scatterChartoption = {
-            // type: 'bubble',
+            type:"scatter",
             title:"北上广一百年城市人均收入调查散点图(虚构数据)",
-            xTag: "年",
-            xTagNum:5,
-            yTag:"元",
-            yTagNum:5,
-            symbolSize:10,
+            xTag: "年",//x轴单位
+            xTagNum:5,//x轴分成几层数据
+            yTag:"元",//y轴单位
+            yTagNum:5,//Y轴分成几层数据
+            symbolSize:10,//旗袍或者散点大小基数
             series:  [
                 {
                     name:"北京",
@@ -130,15 +164,13 @@
                 console.log(i);
                         }
             }
-        var circleChart=new pieChart("circleChart", {...pieDatas,type:"doughnut"});
+        var circleChart=new pieChart("circleChart", {...pieDatas,type:"pie"});
         var doughnutOptions={
             title:"3/4环形图",
-            maxData:1500,
+            maxData:1500,//最大值设置，若没有设置最大值，将会取data里的最大值
             tag:"元",
             data: [{ name: "周一", num:620 }, { name: "周二", num:832 }, { name: "周三", num:800 }, { name: "周四", num: 864}, { name: "周五", num:1090 }, { name: "周六", num:1000 }, { name: "周日", num:1020 },] ,
-            callback:function(i){
-                console.log(i);
-            }
+            callback:(i)=>{console.log(i);}
         }
         var doughnutchart=new doughnutChart("doughnutChart",doughnutOptions);
     </script>

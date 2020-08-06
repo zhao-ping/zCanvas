@@ -44,12 +44,12 @@
         <div class="item" id="circleChart"></div>
         <div class="item" id="radarChart"></div>
         <div class="item" id="barChart"></div>
+        <div class="item" id="noTagBarChart"></div>
         <div class="item" id="barChartHorizon"></div>
         <div class="item" id="bubbleChart"></div>
         <div class="item" id="scatterChart"></div>
         <div class="item" id="lineChart"></div>
     </div>
-    
     <script>
         // 折线图与柱状图
         var lineChartOption = {
@@ -68,20 +68,21 @@
                 name: '邮件营销',
                 data: [820, 932, 901, 934, 1290, 1330, 1320],
                 type: 'area',//line or area
-                tag:''
             }, {
                 name: '联盟广告',
                 data: [920, 1032, 1001, 1034, 1390, 1430, 1420],
                 type: 'area',
-                tag:''
             }, {
                 name: '视频广告',
                 data: [620, 832, 800, 864, 1090, 1000, 1020],
                 type: 'area',
-                tag:''
             }],
             callback(i){console.log(i)}
         };
+        var noTagBarChart=new barChart("noTagBarChart", lineChartOption);
+        lineChartOption.series.map(item=>{
+            item.tag="";
+        })
         var barChartHorizon=new barChart("barChartHorizon", {...lineChartOption,type:"horizon"});
         var barchart=new barChart("barChart", lineChartOption);
         var linechart=new lineChart("lineChart", lineChartOption);
