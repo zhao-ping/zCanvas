@@ -6,6 +6,7 @@
 ```
 <div id="barChart"></div>
 ```
+
 ```
 //柱状图
 new barChart("barChart", lineChartOption);
