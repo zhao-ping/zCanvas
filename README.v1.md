@@ -1,12 +1,13 @@
+#### 
 
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/z-chart.png)
 
-#### zp-chart现现有的图表包括```柱状图```、```折线图```、```饼图```、```环形图```、```雷达图```、```散点图```、```气泡图```这几种图表，下面会一一简单的说明使用方法：
+#### z-chart.v1简介
+zp-chart现现有的图表包括```柱状图```、```折线图```、```饼图```、```环形图```、```雷达图```、```散点图```、```气泡图```这几种图表，下面会一一简单的说明使用方法：
 每种图表都需要传入两个参数，第一个是放置图表的标签的id，类型是str，第二个是图表所需参数：
 ```
 <div id="barChart"></div>
 ```
-
 ```
 //柱状图
 new barChart("barChart", lineChartOption);
@@ -22,6 +23,10 @@ npm install
 ```
 npm run babel
 ```
+## 直接获取1.0版本
+
+<https://github.com/zhao-ping/zCanvas/blob/master/ES5/z-chart.v1.js>
+
 ## 1.柱状图
 ### A：垂直型柱状图
 柱状图如果不传type参数，将会默认是垂直型柱状图
