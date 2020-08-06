@@ -1,6 +1,6 @@
 
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/z-chart.v2.jpg)
-##z-chart2.0版本简介
+## z-chart2.0版本简介
 zp-chart.v2现现有的图表包括```柱状图```、```折线图```、```饼图```、```环形图```、```3/4环形图```、```雷达图```、```散点图```、```气泡图```这几种图表，与v1版本相比,有以下变化：
 ```
 1.代码优化
