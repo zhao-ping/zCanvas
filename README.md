@@ -27,7 +27,7 @@ new barChart("barChart", barChartOption);
 详细使用方法请阅读下方内容：
 
 ## 柱状图与折线图
-折线图和柱状图可以点击图例切换显示的数据
+折线图和柱状图可以点击图例切换显示的数据.
 柱状图与折线图的参数格式是一样的，不同的参数值会有不同的效果
 ```
 var chartOption = {
@@ -62,14 +62,13 @@ var chartOption = {
 ```
 #### 垂直型柱状图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/virticleBarChart.jpg)
-type不传参时，默认为垂直型柱状图
+type不传参时，默认为垂直型柱状图.
 ```
 type:"virticle"
 new barChart("barChart", lineChartOption);
 ```
 #### 水平型柱状图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/horizonBarChart.jpg)
-type不传参时，默认为垂直型柱状图
 ```
 type:"horizon"
 new barChart("barChartHorizon", {...chartOption,type:"horizon"});
@@ -88,7 +87,7 @@ new barChart("barChartHorizon", {...chartOption,type:"horizon"});
 #### 有色块折线图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/linechart.jpg)
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/linechart2.jpg)
-series里的每条数据中有type参数，type有两种类型```line```和```area```,无色块折线图用```area```
+series里的每条数据中有type参数，type有两种类型```line```和```area```,有色块折线图用```area```
 ```
 {
     name: '联盟广告',
@@ -99,8 +98,9 @@ series里的每条数据中有type参数，type有两种类型```line```和```ar
 new lineChart("lineChart", chartOption);
 ```
 ## 气泡图与散点图
-气泡图和散点图可以点击图例切换显示的数据
-气泡图与餐点图的参数格式只有一点不一样,气泡图的series里的每项都是三维数据，有参数z
+气泡图和散点图可以点击图例切换显示的数据。
+用type设置您需要的是三维的气泡图还是二维的散点图，```type:'scatter'```:散点图；```type:'bubble'```:气泡图.
+气泡图和散点图的参数格式只有一点不一样,气泡图的series里的每项都是三维数据，有参数z
 ```
 var scatterChartoption = {
     type:"scatter",
@@ -109,7 +109,7 @@ var scatterChartoption = {
     xTagNum:5,//x轴分成几层数据
     yTag:"元",//y轴单位
     yTagNum:5,//Y轴分成几层数据
-    symbolSize:10,//旗袍或者散点大小基数
+    symbolSize:10,//气泡或者散点大小基数
     series:  [
         {
             name:"北京",
@@ -150,7 +150,6 @@ new scatterChart("scatterChart",scatterChartoption);
 ```
 #### 气泡图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/bublechart.jpg)
-如果type没有传参，将默认是散点图
 ```
 type:"bubble"
 new scatterChart("bubbleChart",{...scatterChartoption,type:"bubble"};
@@ -194,7 +193,8 @@ var radarDatas={
 var radarcahrt=new radarChart("radarChart", radarDatas);
 ```
 ## 环形图与饼图
-环形图与饼图使用的是同一个类，参数也只有type类型不同，环形图,选中的数据图表会有相应的偏移，点击饼图或者环形图可以切换选中项，也可以点击图例切换当前选中项目
+环形图与饼图使用的是同一个类，参数也只有type类型不同，环形图,选中的数据图表会有相应的偏移，点击饼图或者环形图可以切换选中项，也可以点击图例切换当前选中项目.
+type来控制是扇形图还是环形图```type:'pie'```:扇形，```type:'doughnut'```:环形
 ```
 var pieDatas = { 
 title: "饼图或者环形图",
@@ -209,7 +209,7 @@ callback:(i)=>{console.log(i);}
 type类型不传参默认为饼图
 ```
 type:"pie"
-new pieChart("circleChart", {...pieDatas,type:"doughnut"})
+new pieChart("circleChart", {...pieDatas,type:"pie"})
 ```
 #### 环形图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/circleChart.jpg)
@@ -219,7 +219,7 @@ new pieChart("circleChart", {...pieDatas,type:"doughnut"})
 ```
 #### 3/4环形图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/doughnutchart.jpg)
-3/4环形图数据最好大于3条
+3/4环形图数据最好大于等于2条
 ```
 var doughnutOptions={
     title:"3/4环形图",
