@@ -60,20 +60,20 @@ var chartOption = {
     callback(i){console.log(i)}//点击切换展示的具体数据条时的回调函数
 };
 ```
-#### 垂直型柱状图
+### 垂直型柱状图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/virticleBarChart.jpg)
 type不传参时，默认为垂直型柱状图.
 ```
 type:"virticle"
 new barChart("barChart", lineChartOption);
 ```
-#### 水平型柱状图
+### 水平型柱状图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/horizonBarChart.jpg)
 ```
 type:"horizon"
 new barChart("barChartHorizon", {...chartOption,type:"horizon"});
 ```
-#### 无色块折线图
+### 无色块折线图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/linechart1.jpg)
 series里的每条数据中有type参数，type有两种类型```line```和```area```,无色块折线图用```line```
 ```
@@ -84,7 +84,7 @@ series里的每条数据中有type参数，type有两种类型```line```和```ar
 },
 new barChart("barChartHorizon", {...chartOption,type:"horizon"});
 ```
-#### 有色块折线图
+### 有色块折线图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/linechart.jpg)
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/linechart2.jpg)
 series里的每条数据中有type参数，type有两种类型```line```和```area```,有色块折线图用```area```
@@ -141,14 +141,14 @@ scatterChartoption.series.map((item,i)=>{
     }
 })
 ```
-#### 散点图
+### 散点图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/scatterChart.jpg)
 如果type没有传参，将默认是散点图
 ```
 type:"scatter"
 new scatterChart("scatterChart",scatterChartoption);
 ```
-#### 气泡图
+### 气泡图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/bublechart.jpg)
 ```
 type:"bubble"
@@ -204,20 +204,20 @@ data: [{ name: "周一", num:620 }, { name: "周二", num:832 }, { name: "周三
 callback:(i)=>{console.log(i);}
 }
 ```
-#### 饼图
+### 饼图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/piechart.jpg)
 type类型不传参默认为饼图
 ```
 type:"pie"
 new pieChart("circleChart", {...pieDatas,type:"pie"})
 ```
-#### 环形图
+### 环形图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/circleChart.jpg)
 ```
 type:"doughnut"
 new pieChart("circleChart", {...pieDatas,type:"doughnut"})
 ```
-#### 3/4环形图
+### 3/4环形图
 ![image](https://github.com/zhao-ping/zCanvas/blob/master/images/doughnutchart.jpg)
 3/4环形图数据最好大于等于2条
 ```
