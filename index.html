@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Zchart </title>
-    <script type="text/javascript" src="./ES5/z-chart.v1.js"></script>
+    <script type="text/javascript" src="./ES6/z-chart.v2.js"></script>
+    <title>图表2.0</title>
     <style>
         html,
         body {
@@ -40,40 +38,31 @@
         } 
     </style>
 </head>
-
 <body>
     <div class="ZchartBox">
-        <div class="item" id="bubbleChart">
-        </div>
-        <div class="item" id="scatterChart">
-        </div>
-        <div class="item" id="barChart">
-        </div>
-        <div class="item" id="barChartHorizon">
-        </div>
-        <div class="item" id="lineChartArea">
-        </div>
-        <div class="item" id="lineChart">
-        </div>
-        <div class="item" id="lineChartAndArea">
-        </div>
-        <div class="item" id="lineChartTag">
-        </div>
-        <div class="item" id="circleChart">
-        </div>
-        <div class="item" id="pieChart">
-        </div>
-        <div class="item" id="radarChart">
-        </div>
+        <div class="item" id="doughnutChart"></div>
+        <div class="item" id="circleChart"></div>
+        <div class="item" id="radarChart"></div>
+        <div class="item" id="barChart"></div>
+        <div class="item" id="noTagBarChart"></div>
+        <div class="item" id="barChartHorizon"></div>
+        <div class="item" id="bubbleChart"></div>
+        <div class="item" id="scatterChart"></div>
+        <div class="item" id="lineChart"></div>
     </div>
     <script>
-        var lineChartOptionArea = {
-            title: "一周销售额报表",
+        // 折线图与柱状图
+        var lineChartOption = {
+            title: "一周销售额报表", 
+            type:"verticle",
             xAxis: {
+                tag:"周",
                 data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             },
             yAxis: {
-                type: 'value'
+                tofixed:0,
+                type: 'value',
+                tag:"元",
             },
             series: [{
                 name: '邮件营销',
@@ -87,68 +76,54 @@
                 name: '视频广告',
                 data: [620, 832, 800, 864, 1090, 1000, 1020],
                 type: 'area',
-            }]
+            }],
+            callback(i){console.log(i)}
         };
-        var lineChartOption = {
-            title: "一周销售额报表",
-            xAxis: {
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                name: '邮件营销',
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line',//line or area
-            }, {
-                name: '联盟广告',
-                data: [920, 1032, 1001, 1034, 1390, 1430, 1420],
-                type: 'line',
-            }, {
-                name: '视频广告',
-                data: [620, 832, 800, 864, 1090, 1000, 1020],
-                type: 'line',
-            }]
-        };
-        //柱状图
-        new barChart("barChart", lineChartOption);
-        new barChart("barChartHorizon", {...lineChartOption,type:"horizon"});
-        // 折线图
-        new lineChart("lineChart", lineChartOption);
-        var lineChartTagOption = {
-            title: "一周销售额报表",
-            xAxis: {
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                name: '邮件营销',
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'area',
-                tag:'元'
-            }]
-        };
-        // 这线上带有标注
-        new lineChart("lineChartTag", lineChartTagOption);
-        // 折线图带有区块填充色
-        new lineChart("lineChartArea", lineChartOptionArea);
-        lineChartOption.series[2].type="area";
-        new lineChart("lineChartAndArea", lineChartOption);
-        //饼图
-        var pieDatas = { 
-            title: "一周销售额报表",
-            defalutIndex:0,
-            type:"pie",//pie、circle
-            data: [{ title: "周一", num:620 }, { title: "周二", num:832 }, { title: "周三", num:800 }, { title: "周四", num: 864}, { title: "周五", num:1090 }, { title: "周六", num:1000 }, { title: "周日", num:1020 },] ,
-            callback:function(i){
-                console.log(i);
-                        }
+        var noTagBarChart=new barChart("noTagBarChart", lineChartOption);
+        lineChartOption.series.map(item=>{
+            item.tag="";
+        })
+        var barChartHorizon=new barChart("barChartHorizon", {...lineChartOption,type:"horizon"});
+        var barchart=new barChart("barChart", lineChartOption);
+        var linechart=new lineChart("lineChart", lineChartOption);
+        // 散点图与气泡图
+        var scatterChartoption = {
+            // type: 'bubble',
+            title:"北上广一百年城市人均收入调查散点图(虚构数据)",
+            xTag: "年",
+            xTagNum:5,
+            yTag:"元",
+            yTagNum:5,
+            symbolSize:10,
+            series:  [
+                {
+                    name:"北京",
+                    data:[]
+                },
+                {
+                    name:"上海",
+                    data:[]
+                },
+                {
+                    name:"广州",
+                    data:[]
+                }
+            ],
+            callback(i){
+                console.log(i)
             }
-        new pieChart("circleChart", {...pieDatas,type:"circle"});
-        new pieChart("pieChart", pieDatas);
+        };
+        scatterChartoption.series.map((item,i)=>{
+            for(let i=0;i<30;i++){
+                var x=Math.random()*100+1920;
+                var y=Math.random()*(i+2)*(x-1920)*(x-1920)/2+2000;
+                var z=Math.random()*90+10;
+                item.data.push({x,y,z})
+            }
+        })
+        var scatterchart=new scatterChart("scatterChart",scatterChartoption);
+        var bubblechart=new scatterChart("bubbleChart",{...scatterChartoption,type:"bubble",title:"北上广一百年城市人均收入与幸福感气泡图(虚构数据)"});
+        // 雷达图
         var radarDatas={
             defalutIndex:0,
             title:"英雄能力评估",
@@ -180,72 +155,28 @@
                 },
             ]
         }
-        new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
-        var scatterChartoption = {
-            type: 'scatter',
-            title:"IT行业经验岗位收入散点图(虚构数据)",
-            xTag: "年",
-            xTagNum:5,
-            yTag:"K",
-            yTagNum:5,
-            symbolSize:null,
-            series:  [
-                {
-                    name:"JAVA",
-                    data:[]
-                },
-                {
-                    name:"Python",
-                    data:[]
-                },
-                {
-                    name:"Golang",
-                    data:[]
-                }
-            ],
-        };
-        scatterChartoption.series.map((item,i)=>{
-            for(let i=0;i<30;i++){
-                var x=Math.random()*50;
-                var y=x*(Math.random()*1.5+i*0.5);
-                var z=Math.random()*15;
-                item.data.push({x,y,z})
+        var radarcahrt=new radarChart("radarChart", {...radarDatas,callback:function(i){console.log(i)}});
+        //饼图
+        var pieDatas = { 
+            title: "饼图或者环形图",
+            defalutIndex:0,
+            type:"pie",//pie:扇形，doughnut:环形
+            data: [{ name: "周一", num:620 }, { name: "周二", num:832 }, { name: "周三", num:800 }, { name: "周四", num: 864}, { name: "周五", num:1090 }, { name: "周六", num:1000 }, { name: "周日", num:1020 },] ,
+            callback:function(i){
+                console.log(i);
+                        }
             }
-        })
-        new scatterChart("scatterChart",scatterChartoption);
-        var bubbleChartoption = {
-            type: 'bubble',
-            title:"北上广一百年城市人均收入与幸福感气泡图(虚构数据)",
-            xTag: "年",
-            xTagNum:5,
-            yTag:"元",
-            yTagNum:5,
-            symbolSize:null,
-            series:  [
-                {
-                    name:"北京",
-                    data:[]
-                },
-                {
-                    name:"上海",
-                    data:[]
-                },
-                {
-                    name:"广州",
-                    data:[]
-                }
-            ],
-        };
-        bubbleChartoption.series.map((item,i)=>{
-            for(let i=0;i<10;i++){
-                var x=Math.random()*100+1920;
-                var y=Math.random()*(i+2)*(x-1920)*(x-1920)/2+2000;
-                var z=Math.random()*90+10;
-                item.data.push({x,y,z})
+        var circleChart=new pieChart("circleChart", {...pieDatas,type:"doughnut"});
+        var doughnutOptions={
+            title:"3/4环形图",
+            maxData:1500,
+            tag:"元",
+            data: [{ name: "周一", num:620 }, { name: "周二", num:832 }, { name: "周三", num:800 }, { name: "周四", num: 864}, { name: "周五", num:1090 }, { name: "周六", num:1000 }, { name: "周日", num:1020 },] ,
+            callback:function(i){
+                console.log(i);
             }
-        })
-        new scatterChart("bubbleChart",bubbleChartoption);
+        }
+        var doughnutchart=new doughnutChart("doughnutChart",doughnutOptions);
     </script>
 </body>
-
 </html>
